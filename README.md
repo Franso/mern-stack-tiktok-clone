@@ -1,4 +1,4 @@
-# mern-stack-tiktok-clone
+# MERN Stack Based Tiktok Clone
 
 This is a tik tok clone created on MERN stack.
 
