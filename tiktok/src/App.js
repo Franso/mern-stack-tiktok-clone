@@ -1,34 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Video from "./Video";
 import "./App.css";
+import axios from "./axios";
 
 function App() {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      const response = await axios.get("/v2/posts");
+      setVideos(response.data);
+
+      return response;
+    }
+    fetchPosts();
+  }, []);
+
   return (
     <div className="app">
       <div className="app__videos">
-        <Video
-          url="https://www.youtube.com/embed/suvwogCC7PI?controls=0"
-          channel="muasyaaaa"
-          description="Welcome to my Epic react build"
-          song="Love Yours....J.Cole"
-          likes={69}
-          shares={21}
-          messages={12}
-        />
-        <Video
-          url="https://www.youtube.com/embed/pZd22XkQ4rw?controls=0"
-          channel="franso"
-          description="Faiyyyaaaa"
-          song="Tuma Kitu"
-          likes={23}
-          shares={45}
-          messages={78}
-        />
+        {videos.map(
+          ({ url, channel, description, song, likes, messages, shares }) => (
+            <Video
+              url={url}
+              channel={channel}
+              song={song}
+              likes={likes}
+              messages={messages}
+              description={description}
+              shares={shares}
+            />
+          )
+        )}
       </div>
-
-      {/* app container */}
-      {/* videos */}
-      {/* videos */}
     </div>
   );
 }
